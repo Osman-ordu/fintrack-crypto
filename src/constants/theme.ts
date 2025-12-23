@@ -5,13 +5,14 @@
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#22C55E'; // Güzel yeşil renk
-const tintColorDark = '#22C55E'; // Güzel yeşil renk
+const tintColorLight = '#22C55E'; 
+const tintColorDark = '#22C55E'; 
 
 export const Colors = {
   light: {
     text: '#11181C',
-    background: '#F5F7FA', // Maviye kaçan beyaz
+    background: '#F5F7FA', 
+    card: 'rgba(0, 0, 0, 0.02)',
     tint: tintColorLight,
     icon: '#687076',
     tabIconDefault: '#687076',
@@ -20,6 +21,7 @@ export const Colors = {
   dark: {
     text: '#ECEDEE',
     background: '#151718',
+    card: 'rgba(255, 255, 255, 0.05)', 
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DarkTheme, DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import RootNavigator from './navigation/RootNavigator';
 
 const lightTheme: Theme = {
@@ -28,13 +28,21 @@ const darkTheme: Theme = {
   },
 };
 
-export default function AppRoot() {
-  const colorScheme = useColorScheme();
+function AppContent() {
+  const { colorScheme } = useTheme();
 
   return (
     <NavigationContainer theme={colorScheme === 'dark' ? darkTheme : lightTheme}>
       <RootNavigator />
     </NavigationContainer>
+  );
+}
+
+export default function AppRoot() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

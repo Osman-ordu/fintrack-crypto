@@ -1,3 +1,4 @@
+import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { ADAIcon, BNBIcon, BTCIcon, DOGEIcon, ETHIcon, SOLIcon, XRPIcon } from '@/assets/icons';
 import { PopularCoin, Slide, TrendingCoin } from '@/types';
@@ -99,5 +100,59 @@ export const portfolioAnalysis = {
       key: 'slide-3',
       title: 'Hedefler koy, riskini yönet',
       subtitle: 'Uyarılar ve hedefler ile duygusal kararları azalt, stratejine sadık kal.',
+    },
+  ];
+
+  export type PortfolioHolding = {
+    id: string;
+    symbol: string;
+    name: string;
+    amount: string;
+    value: number;
+    pricePerUnit: number;
+    change24h: number;
+    iconComponent: React.ComponentType<{ width?: number; height?: number; color?: string }>;
+  };
+
+  export const portfolioHoldings: PortfolioHolding[] = [
+    {
+      id: '1',
+      symbol: 'BTC',
+      name: 'Bitcoin',
+      amount: '0.45',
+      value: 56452.84,
+      pricePerUnit: 125450.75,
+      change24h: 2.5,
+      iconComponent: BTCIcon,
+    },
+    {
+      id: '2',
+      symbol: 'ETH',
+      name: 'Ethereum',
+      amount: '0.825',
+      value: 37635.23,
+      pricePerUnit: 45620.30,
+      change24h: 1.8,
+      iconComponent: ETHIcon,
+    },
+    {
+      id: '3',
+      symbol: 'BNB',
+      name: 'Binance Coin',
+      amount: '5.79',
+      value: 18817.61,
+      pricePerUnit: 3250.50,
+      change24h: 3.2,
+      iconComponent: BNBIcon,
+    },
+    {
+      id: '4',
+      symbol: 'SOL',
+      name: 'Solana',
+      amount: '10.03',
+      value: 12545.07,
+      pricePerUnit: 1250.75,
+      change24h: -0.5,
+      iconComponent: SOLIcon,
     },
   ];

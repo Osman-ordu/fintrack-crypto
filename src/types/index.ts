@@ -3,6 +3,7 @@ import type { TextProps, ViewProps } from "react-native";
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
+  card?: boolean;
 };
 
 export type ThemedTextProps = TextProps & {
@@ -26,7 +27,7 @@ export type IconProps = {
 
   export type TabParamList = {
     Home: undefined;
-    MarketsStack: undefined;
+    Market: undefined;
     Portfolio: undefined;
     Profile: undefined;
   };

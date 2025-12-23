@@ -1,0 +1,1 @@
+export { default as EasyBuySellScreen } from './screens/EasyBuySellScreen';

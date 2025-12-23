@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   activeBorder: {
     position: 'absolute',
-    top: -8,
+    top: 0,
     left: 0,
     right: 0,
     height: 3,

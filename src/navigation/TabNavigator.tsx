@@ -1,25 +1,24 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet,TouchableOpacity, View } from 'react-native';
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/components/ui/themed-text';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import HomeScreen from '@/screens/home/HomeScreen';
-import PortfolioScreen from '@/screens/portfolio/PortfolioScreen';
-import ProfileScreen from '@/screens/profile/ProfileScreen';
+import { ThemedText } from '@/components/ui';
+import { useTheme as useAppTheme } from '@/contexts/ThemeContext';
+import { HomeScreen } from '@/feautures/home';
+import { PortfolioScreen } from '@/feautures/portfolio';
+import { ProfileScreen } from '@/feautures/profile';
 import { TabParamList } from '@/types';
-import MarketsStack from './MarketStack';
+import MarketStack from './stacks/MarketStack';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
 function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const theme = useTheme();
-  const colorScheme = useColorScheme();
-
+  const { colorScheme } = useAppTheme();
   const borderColor = colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)';
   const inactiveTextColor = colorScheme === 'dark' ? '#9BA1A6' : '#687076';
-  const activeColor = theme.colors.primary; // Yeşil renk (#22C55E)
+  const activeColor = colorScheme === 'dark' ? '#fff' : '#333';
 
   if (!navigation || !state || !descriptors) {
     return null;
@@ -41,14 +40,12 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           typeof options.tabBarLabel === 'string'
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
-
+              ? options.title
+              : route.name;
         const isFocused = state.index === index;
 
         const onPress = () => {
           if (!navigation) return;
-
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -66,7 +63,6 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
         const onLongPress = () => {
           if (!navigation) return;
-
           navigation.emit({
             type: 'tabLongPress',
             target: route.key,
@@ -76,7 +72,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         let iconName: keyof typeof Ionicons.glyphMap = 'home-outline';
         if (route.name === 'Home') {
           iconName = isFocused ? 'home' : 'home-outline';
-        } else if (route.name === 'MarketsStack') {
+        } else if (route.name === 'Market') {
           iconName = isFocused ? 'trending-up' : 'trending-up-outline';
         } else if (route.name === 'Portfolio') {
           iconName = isFocused ? 'pie-chart' : 'pie-chart-outline';
@@ -126,54 +122,40 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   );
 }
 
-export default function TabNavigator() {
-
-  return (
-    <Tab.Navigator
-      tabBar={(props) => <CustomTabBar {...props} />}
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen
-        name="MarketsStack"
-        component={MarketsStack}
-        options={{ title: 'Markets' }}
-      />
-      <Tab.Screen name="Portfolio" component={PortfolioScreen} options={{ title: 'Portfolio' }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
-    </Tab.Navigator>
-  );
-}
-
 const styles = StyleSheet.create({
   tabBarContainer: {
     flexDirection: 'row',
-    marginHorizontal: 0.5,
-    height: 80,
+    height: 70,
     borderTopWidth: 0.5,
-    elevation: 0,
-    shadowOpacity: 0,
+    paddingBottom: 10,
   },
   tabItem: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    marginBottom: 5,
   },
   activeBorder: {
     position: 'absolute',
     top: 0,
-    left: 0,
-    right: 0,
-    height: 1.5,
-    borderTopLeftRadius: 0.5,
-    borderTopRightRadius: 0.5,
+    width: '100%',
+    height: 0.5,
   },
   tabLabel: {
     fontSize: 12,
   },
 });
 
+export default function TabNavigator() {
+  return (
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+      tabBar={(props) => <CustomTabBar {...props} />}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Market" component={MarketStack} />
+      <Tab.Screen name="Portfolio" component={PortfolioScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+}
