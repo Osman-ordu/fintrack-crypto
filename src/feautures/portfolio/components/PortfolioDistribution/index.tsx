@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
-import { Button } from '@/components/ui/button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { portfolioDistribution } from '@/db';
@@ -41,11 +40,6 @@ const createArcPath = (
 };
 
 export function PortfolioDistribution() {
-  const handleViewPortfolio = () => {
-    // TODO: Navigate to portfolio screen
-    console.log('Portföyü Gör clicked');
-  };
-
   // Calculate angles for each segment
   let currentAngle = -90; // Start from top
   const chartSegments = portfolioDistribution.map((item) => {
@@ -93,14 +87,6 @@ export function PortfolioDistribution() {
             ))}
           </View>
         </View>
-
-        <Button
-          title="Portföyü Gör"
-          onPress={handleViewPortfolio}
-          variant="outline"
-          size="medium"
-          style={styles.button}
-        />
       </ThemedView>
     </ThemedView>
   );
