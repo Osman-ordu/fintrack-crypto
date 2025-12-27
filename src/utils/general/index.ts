@@ -73,3 +73,26 @@ export const cleanNumericInput = (text: string): string => {
   }
   return cleanedText;
 };
+
+/**
+ * Format date to Turkish format: DD/MM/YYYY/HH:mm
+ * @param date - Date object or date string
+ * @returns Formatted date string in format: 27/12/2025/15:45
+ */
+export const formatTransactionDate = (date: Date | string | number): string => {
+  const dateObj = typeof date === 'string' || typeof date === 'number' 
+    ? new Date(date) 
+    : date;
+  
+  if (isNaN(dateObj.getTime())) {
+    return '';
+  }
+
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const year = dateObj.getFullYear();
+  const hours = String(dateObj.getHours()).padStart(2, '0');
+  const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+
+  return `${day}/${month}/${year}/${hours}:${minutes}`;
+};
