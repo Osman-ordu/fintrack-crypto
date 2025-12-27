@@ -6,6 +6,14 @@ export const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 12,
   },
+  logoContainer: {
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  logoImage: {
+    maxWidth: 150,
+    maxHeight: 40,
+  },
   title: {
     fontSize: 28,
     fontWeight: '700',

@@ -117,9 +117,39 @@ export const styles = StyleSheet.create({
     submitButton: {
       width: '100%',
     },
+    swapContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 8,
+    },
+    rateInfo: {
+      marginTop: 12,
+      padding: 12,
+      borderRadius: 8,
+      backgroundColor: 'rgba(0, 0, 0, 0.02)',
+      alignItems: 'center',
+    },
+    rateText: {
+      fontSize: 14,
+      fontWeight: '500',
+      opacity: 0.7,
+    },
+    connectionStatus: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      padding: 12,
+      borderRadius: 8,
+      backgroundColor: 'rgba(245, 158, 11, 0.1)',
+      marginBottom: 16,
+    },
+    connectionStatusText: {
+      fontSize: 12,
+      color: '#F59E0B',
+      fontWeight: '500',
+    },
     modalOverlay: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       justifyContent: 'flex-end',
     },
     modalContent: {
