@@ -1,3 +1,3 @@
-export { QuickTransactions } from './QuickTransactions';
+export { QuickTransactions } from './LastTransactions';
 export { AddCurrencyModal } from './AddCurrencyModal';
 

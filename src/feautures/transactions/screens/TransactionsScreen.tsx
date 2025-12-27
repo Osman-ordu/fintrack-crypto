@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { ThemedView } from '@/components/ui/themed-view';
 import { AppLogo, useAppLogoHeight } from '@/components/layout';
-import { QuickTransactions } from '../components/QuickTransactions';
+import { QuickTransactions } from '../components/LastTransactions';
 import { AddCurrencyModal } from '../components/AddCurrencyModal';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
+import { CreateTransaction } from '../components/CreateTransaction';
 import { styles } from './TransactionsScreen.styles';
 
 export default function TransactionsScreen() {
@@ -55,6 +56,9 @@ export default function TransactionsScreen() {
       >
         <ThemedView style={styles.content}>
           <QuickTransactions onQuickAdd={handleQuickAdd} />
+        </ThemedView>
+        <ThemedView style={styles.content}>
+          <CreateTransaction onQuickAdd={handleQuickAdd}/>
         </ThemedView>
       </ScrollView>
 

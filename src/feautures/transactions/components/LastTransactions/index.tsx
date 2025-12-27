@@ -1,15 +1,11 @@
 import React from 'react';
-import { Pressable } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { CustomGrid } from '@/components/ui/custom-grid';
-import { quickTransactionColumns } from '@/db/columns';
-import { useThemeColor } from '@/hooks/use-theme-color';
-import { useDispatch } from 'react-redux';
+import { quickTransactionColumns } from '@/db/columns/quickTransactionColumns';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getQuickTransaction } from '@/store/quickTransactions';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { styles } from './styles';
 
@@ -18,13 +14,12 @@ interface QuickTransactionsProps {
 }
 
 export function QuickTransactions({ onQuickAdd }: QuickTransactionsProps) {
-  const dispatch = useDispatch();
-  const quickTransactions = useSelector((state: RootState) => state.quickTransaction?.data?.data);
-  const textColor = useThemeColor({}, 'text');
+  const dispatch = useAppDispatch();
+  const quickTransactions = useAppSelector((state: RootState) => state.quickTransaction?.data?.data);
 
   useEffect(() => {
    (async () => {
-    await dispatch(getQuickTransaction() as any);
+    await dispatch(getQuickTransaction());
    })();
   }, []);
 
@@ -37,6 +32,9 @@ export function QuickTransactions({ onQuickAdd }: QuickTransactionsProps) {
         gridKey="quick-transactions"
         data={quickTransactions || []}
         columns={quickTransactionColumns}
+        renderRowActions={undefined}
+        /*
+
         renderRowActions={(row) => (
           <Pressable
             style={[styles.addButton, { backgroundColor: textColor + '20' }]}
@@ -45,6 +43,8 @@ export function QuickTransactions({ onQuickAdd }: QuickTransactionsProps) {
             <Ionicons name="add" size={18} color={textColor} />
           </Pressable>
         )}
+        */
+      
       />
     </ThemedView>
   );

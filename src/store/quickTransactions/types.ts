@@ -7,8 +7,10 @@ export interface QuickTransactionResponse {
 export interface QuickTransaction {
     id: string;
     baseAsset: string;
-        quoteAsset: string;
-        amount: number;
+    quoteAsset: string;
+    amount: number;
     transactionDate: Date;
     total: number;
 }
+
+export type CreateQuickTransaction = Omit<QuickTransaction, 'id'>;
