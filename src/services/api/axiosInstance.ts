@@ -2,7 +2,7 @@ import axios from 'axios';
 import { tokenService } from './tokenService';
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_FOREIGN_API_URL || 'https://v6.exchangerate-api.com/v6/9418220ae13ffc3ffbe737cb',
+  baseURL: process.env.EXPO_PUBLIC_FOREIGN_API_URL || 'http://localhost:3000',
   timeout: 15000,
 });
 
