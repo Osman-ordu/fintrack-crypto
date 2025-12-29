@@ -1,4 +1,3 @@
-// features/foreignUsd/index.ts
 import { createAsyncThunk, type AsyncThunk } from '@reduxjs/toolkit';
 import { createSliceModule } from '@/store/createSliceModule';
 import { CallApi } from '@/services/api/callApi';
