@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, NavigationContainer, Theme } from '@react-navi
 import { Provider } from 'react-redux';
 import { Colors } from '@/theme';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
-import RootNavigator from './navigation/RootNavigator';
+import RootNavigator from './navigation';
 import { store } from './store/store';
 
 const lightTheme: Theme = {

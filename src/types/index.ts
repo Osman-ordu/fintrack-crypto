@@ -18,22 +18,6 @@ export type IconProps = {
     color?: string;
   };
 
-  export type RootStackParamList = {
-    Onboarding: undefined;
-    Tabs: undefined;
-    EasyBuySell: undefined;
-  };
-
-  export type TabParamList = {
-    Market: undefined;
-    Transactions: undefined;
-    Portfolio: undefined;
-    Profile: undefined;
-  };
-
-  export type MarketStackParamList = {
-    Markets: undefined;
-  };
 
   export type Currency = {
     symbol: string;
