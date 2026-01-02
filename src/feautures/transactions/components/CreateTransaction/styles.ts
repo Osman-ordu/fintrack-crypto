@@ -3,40 +3,38 @@ import { SemanticColors } from '@/theme';
 
 export const styles = StyleSheet.create({
   card: {
+    flex: 1,
     borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '700',
-    marginBottom: 8,
+    padding: 10,
+    marginBottom: 0,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 11,
     opacity: 0.6,
-    marginBottom: 20,
+    marginBottom: 6,
     fontWeight: '400',
   },
   connectionStatus: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    padding: 12,
-    borderRadius: 8,
+    gap: 4,
+    padding: 6,
+    borderRadius: 6,
     backgroundColor: SemanticColors.warningBackground,
-    marginBottom: 16,
+    marginBottom: 6,
   },
   connectionStatusText: {
-    fontSize: 12,
+    fontSize: 10,
     color: SemanticColors.warning,
     fontWeight: '500',
   },
   formContainer: {
-    gap: 16,
+    flex: 1,
+    gap: 6,
+    justifyContent: 'flex-start',
   },
   submitButton: {
-    marginTop: 8,
+    marginTop: 2,
   },
 });
 

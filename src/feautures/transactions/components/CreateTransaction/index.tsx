@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { AmountInput, CurrencyPairSelector, PriceDisplay } from '@/components/ui';
 import { Button } from '@/components/ui/button';
-import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { useAppDispatch } from '@/store/hooks';
 import { getQuickTransaction, postQuickTransaction } from '@/store/quickTransactions';
 import { CreateQuickTransaction } from '@/store/quickTransactions/types';
-import { ConnectionStatus,CurrencyPickerModal } from './components';
-import { useTransactionForm } from './hooks/use-transaction-form';
-import { getDynamicStyles,styles } from './styles';
+import { cleanNumericInput } from '@/utils';
+import { ConnectionStatus } from './ConnectionStatus';
+import { CurrencyPickerModal } from './CurrencyPickerModal';
+import { NumericKeypad } from './NumericKeypad';
+import { useTransactionForm } from '../../hooks/use-transaction-form';
+import { getDynamicStyles, styles } from './styles';
 
 export default function CreateTransaction() {
   const dispatch = useAppDispatch();
@@ -32,6 +34,29 @@ export default function CreateTransaction() {
 
   const { control, handleSubmit, setValue, formState: { errors, isSubmitting } } = form;
 
+  const handleNumberPress = (number: string) => {
+    const currentAmount = amount || '';
+    const newAmount = currentAmount + number;
+    const cleaned = cleanNumericInput(newAmount);
+    setValue('amount', cleaned, { shouldValidate: true });
+  };
+
+  const handleDeletePress = () => {
+    const currentAmount = amount || '';
+    if (currentAmount.length > 0) {
+      const newAmount = currentAmount.slice(0, -1);
+      setValue('amount', newAmount, { shouldValidate: true });
+    }
+  };
+
+  const handleDecimalPress = () => {
+    const currentAmount = amount || '';
+    if (!currentAmount.includes('.')) {
+      const newAmount = currentAmount + '.';
+      setValue('amount', newAmount, { shouldValidate: true });
+    }
+  };
+
   const onSubmit = async (data: any) => {
     try {
       const amountNum = parseFloat(data.amount);
@@ -50,8 +75,6 @@ export default function CreateTransaction() {
       await dispatch(getQuickTransaction());
 
       setValue('amount', '');
-      setValue('baseAsset', '');
-      setValue('quoteAsset', 'TRY');
     } catch (error) {
       console.error('Transaction creation error:', error);
     }
@@ -59,11 +82,6 @@ export default function CreateTransaction() {
 
   return (
     <ThemedView card style={styles.card}>
-      <ThemedText style={styles.title}>İşlem Oluştur</ThemedText>
-      <ThemedText style={styles.subtitle}>
-        Miktar ve döviz çifti seçerek yeni işlem ekleyin
-      </ThemedText>
-
       <ConnectionStatus isConnected={isConnected} />
 
       <View style={styles.formContainer}>
@@ -73,27 +91,47 @@ export default function CreateTransaction() {
           onBaseAssetPress={() => setShowBaseAssetPicker(true)}
           quoteAsset={quoteAsset}
           dynamicStyles={dynamicStyles}
+          compact={true}
         />
 
-        <AmountInput control={control} errors={errors} dynamicStyles={dynamicStyles} />
-
-        <PriceDisplay
-          baseAsset={baseAsset}
-          quoteAsset={quoteAsset}
-          price={price}
-          amount={amount}
-          calculatedTotal={calculatedTotal}
+        <AmountInput
+          control={control}
+          errors={errors}
+          dynamicStyles={dynamicStyles}
+          editable={false}
+          showKeyboard={false}
+          compact={true}
         />
 
-        <Button
-          title="Portföy'e Ekle"
-          onPress={handleSubmit(onSubmit)}
-          variant="primary"
-          size="large"
-          loading={isSubmitting}
-          disabled={!baseAsset || !amount || !isConnected || isSubmitting}
-          style={styles.submitButton}
+        {baseAsset && (
+          <PriceDisplay
+            baseAsset={baseAsset}
+            quoteAsset={quoteAsset}
+            price={price}
+            amount={amount}
+            calculatedTotal={calculatedTotal}
+            compact={true}
+          />
+        )}
+
+        <NumericKeypad
+          onNumberPress={handleNumberPress}
+          onDeletePress={handleDeletePress}
+          onDecimalPress={handleDecimalPress}
+          disabled={!isConnected || !baseAsset}
         />
+
+        {baseAsset && (
+          <Button
+            title="Portföy'e Ekle"
+            onPress={handleSubmit(onSubmit)}
+            variant="primary"
+            size="small"
+            loading={isSubmitting}
+            disabled={!baseAsset || !amount || !isConnected || isSubmitting}
+            style={styles.submitButton}
+          />
+        )}
       </View>
 
       <CurrencyPickerModal

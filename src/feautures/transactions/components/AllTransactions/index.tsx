@@ -7,7 +7,7 @@ import { getQuickTransaction } from '@/store/quickTransactions';
 import { RootState } from '@/store/store';
 import { styles } from './styles';
 
-export default function QuickTransactions() {
+export default function AllTransactions() {
   const dispatch = useAppDispatch();
   const quickTransactions = useAppSelector((state: RootState) => state.quickTransaction?.data?.data);
   const hasFetchedRef = useRef(false);
@@ -19,19 +19,13 @@ export default function QuickTransactions() {
       dispatch(getQuickTransaction());
     }
   }, [dispatch]);
-  
-  const shouldRender = !isLoading && quickTransactions && quickTransactions.length > 0;
-
-  if (!shouldRender) {
-    return null;
-  }
 
   return (
     <ThemedView card style={styles.card}>
-      <CTextTitle>Son yapılan İşlemler</CTextTitle>
+      <CTextTitle>Tüm İşlemler</CTextTitle>
       <CustomGrid
-        gridKey="quick-transactions"
-        data={quickTransactions}
+        gridKey="all-transactions"
+        data={quickTransactions || []}
         columns={quickTransactionColumns}
         renderRowActions={undefined}
         tab={true}

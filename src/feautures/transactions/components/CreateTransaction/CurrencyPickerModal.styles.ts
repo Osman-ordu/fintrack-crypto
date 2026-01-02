@@ -3,12 +3,15 @@ import { OverlayColors } from '@/theme';
 
 export const styles = StyleSheet.create({
   modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: OverlayColors.overlay,
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  blurOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.95,
+  },
+  modalContentWrapper: {
+    flex: 1,
     justifyContent: 'flex-end',
     zIndex: 1000,
   },
