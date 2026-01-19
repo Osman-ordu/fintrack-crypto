@@ -1,14 +1,18 @@
 import React from 'react';
-import { Pressable,View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
-import { portfolioHoldings } from '@/db';
+import { IPortfolioDistributionItem } from '@/store/portfolio/types';
 import { SemanticColors } from '@/theme';
 import { styles } from './styles';
 
-export function PortfolioHoldings() {
+type PortfolioHoldingsProps = {
+  distribution?: IPortfolioDistributionItem[];
+};
+
+export function PortfolioHoldings({ distribution = [] }: PortfolioHoldingsProps) {
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
@@ -20,29 +24,31 @@ export function PortfolioHoldings() {
         </View>
 
         <View style={styles.list}>
-          {portfolioHoldings.map((holding) => {
-            const isPositive = holding.change24h > 0;
+          {distribution.map((holding, index) => {
+            const changeValue = 0;
+            const isPositive = changeValue > 0;
             const changeColor = isPositive ? SemanticColors.success : SemanticColors.error;
             const changeIcon = isPositive ? 'arrow-up' : 'arrow-down';
-            const IconComponent = holding.iconComponent;
+            const averageUnitPrice =
+              holding.transactionCount > 0 ? holding.total / holding.transactionCount : 0;
 
             return (
-              <Pressable key={holding.id}>
+              <Pressable key={`${holding.baseAsset}-${index}`}>
                 <ThemedView card style={styles.holdingItem}>
                 <View style={styles.holdingLeft}>
                   <View style={styles.iconContainer}>
-                    <IconComponent width={40} height={40} />
+                    <Ionicons name="wallet-outline" size={28} color={SemanticColors.success} />
                   </View>
                   <View style={styles.holdingInfo}>
-                    <ThemedText style={styles.coinName}>{holding.name}</ThemedText>
-                    <ThemedText style={styles.coinSymbol}>{holding.symbol}</ThemedText>
+                    <ThemedText style={styles.coinName}>{holding.baseAsset}</ThemedText>
+                    <ThemedText style={styles.coinSymbol}>{holding.baseAsset}</ThemedText>
                   </View>
                 </View>
 
                 <View style={styles.holdingRight}>
                   <View style={styles.valueContainer}>
                     <ThemedText style={styles.value}>
-                      {holding.value.toLocaleString('tr-TR', {
+                      {holding.total.toLocaleString('tr-TR', {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}{' '}
@@ -51,14 +57,14 @@ export function PortfolioHoldings() {
                     <View style={styles.changeRow}>
                       <Ionicons name={changeIcon} size={14} color={changeColor} />
                       <ThemedText style={[styles.changeText, { color: changeColor }]}>
-                        {Math.abs(holding.change24h).toFixed(2)}%
+                        {Math.abs(changeValue).toFixed(2)}%
                       </ThemedText>
                     </View>
                   </View>
                   <View style={styles.amountContainer}>
-                    <ThemedText style={styles.amount}>{holding.amount}</ThemedText>
+                    <ThemedText style={styles.amount}>{holding.transactionCount} işlem</ThemedText>
                     <ThemedText style={styles.price}>
-                      {holding.pricePerUnit.toLocaleString('tr-TR', {
+                      {averageUnitPrice.toLocaleString('tr-TR', {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}{' '}
