@@ -262,3 +262,13 @@ export type IconProps = {
     children: React.ReactNode;
     style?: StyleProp<TextStyle>;
   }
+
+  export interface INavigationButtonsProps {
+    currentStep: number;
+    totalSteps: number;
+    loading: boolean;
+    onNext: () => void;
+    onBack: () => void;
+    onSubmit: () => void;
+    onLogin: () => void;
+  }

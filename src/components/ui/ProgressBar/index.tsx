@@ -1,5 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, View } from 'react-native';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { Colors } from '@/theme';
 import { IProgressBarProps } from '@/types';
@@ -16,15 +16,27 @@ export function ProgressBar({ currentStep, totalSteps }: IProgressBarProps) {
   );
 
   const progress = (currentStep / totalSteps) * 100;
+  const progressAnim = useRef(new Animated.Value(progress)).current;
+
+  useEffect(() => {
+    Animated.timing(progressAnim, {
+      toValue: progress,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [progress, progressAnim]);
 
   return (
     <View style={styles.container}>
       <View style={[styles.track, { backgroundColor: inactiveColor }]}>
-        <View
+        <Animated.View
           style={[
             styles.progress,
             {
-              width: `${progress}%`,
+              width: progressAnim.interpolate({
+                inputRange: [0, 100],
+                outputRange: ['0%', '100%'],
+              }),
               backgroundColor: activeColor,
             },
           ]}

@@ -6,12 +6,12 @@ export const styles = StyleSheet.create({
       marginBottom: 24,
     },
     track: {
-      height: 3,
-      borderRadius: 1.5,
+      height: 6,
+      borderRadius: 3,
       overflow: 'hidden',
     },
     progress: {
       height: '100%',
-      borderRadius: 1.5,
+      borderRadius: 3,
     },
   });

@@ -6,12 +6,12 @@ export const step1Schema = z.object({
   name: z
     .string()
     .min(2, 'Ad en az 2 karakter olmalıdır')
-    .max(50, 'Ad en fazla 50 karakter olabilir')
+    .max(15, 'Ad en fazla 15 karakter olabilir')
     .regex(/^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]+$/, 'Ad sadece harf içerebilir'),
   surname: z
     .string()
     .min(2, 'Soyad en az 2 karakter olmalıdır')
-    .max(50, 'Soyad en fazla 50 karakter olabilir')
+    .max(15, 'Soyad en fazla 15 karakter olabilir')
     .regex(/^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]+$/, 'Soyad sadece harf içerebilir'),
 });
 
@@ -19,9 +19,7 @@ export const step2Schema = z.object({
   phone: z
     .string()
     .min(1, 'Telefon numarası gereklidir')
-    .regex(/^[0-9+\-\s()]+$/, 'Geçerli bir telefon numarası giriniz')
-    .min(10, 'Telefon numarası en az 10 karakter olmalıdır')
-    .max(20, 'Telefon numarası en fazla 20 karakter olabilir'),
+    .regex(/^0\d{10}$/, 'Telefon numarası 0 ile başlamalı ve 11 haneli olmalıdır'),
 });
 
 export const step3Schema = z.object({

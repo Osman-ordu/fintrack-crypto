@@ -1,20 +1,17 @@
 import React from 'react';
-import { TouchableOpacity,View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Button } from '@/components/ui/Button';
+import { ThemedText } from '@/components/ui/ThemedText';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { Colors } from '@/theme';
+import { INavigationButtonsProps } from '@/types';
 import { styles } from './styles';
 
-interface NavigationButtonsProps {
-  currentStep: number;
-  totalSteps: number;
-  loading: boolean;
-  onNext: () => void;
-  onBack: () => void;
-  onSubmit: () => void;
-  onLogin: () => void;
-}
+const NEXT_LABELS: Record<number, string> = {
+  1: 'Devam Et',
+  2: 'Bilgileri Onayla',
+  3: 'Hesabı Oluştur',
+};
 
 export function NavigationButtons({
   currentStep,
@@ -24,7 +21,7 @@ export function NavigationButtons({
   onBack,
   onSubmit,
   onLogin,
-}: NavigationButtonsProps) {
+}: INavigationButtonsProps) {
   const tintColor = useThemeColor(
     { light: Colors.light.tint, dark: Colors.dark.tint },
     'tint'
@@ -36,6 +33,12 @@ export function NavigationButtons({
 
   const isLastStep = currentStep === totalSteps;
   const canGoBack = currentStep > 1;
+  const nextLabel = NEXT_LABELS[currentStep] ?? 'Devam Et';
+  const labelStyle = {
+    fontSize: 16,
+    fontWeight: '600' as const,
+    letterSpacing: 0.2,
+  };
 
   return (
     <View style={styles.container}>
@@ -44,7 +47,6 @@ export function NavigationButtons({
           style={[
             styles.navButton,
             styles.backButton,
-            { borderColor: canGoBack ? tintColor : borderColor },
             !canGoBack && styles.backButtonDisabled,
           ]}
           onPress={onBack}
@@ -53,42 +55,44 @@ export function NavigationButtons({
         >
           <Ionicons
             name="chevron-back"
-            size={24}
+            size={18}
             color={canGoBack ? tintColor : borderColor}
           />
+          <ThemedText
+            style={[
+              labelStyle,
+              { color: canGoBack ? tintColor : borderColor },
+            ]}
+          >
+            Geri
+          </ThemedText>
         </TouchableOpacity>
 
         {!isLastStep ? (
           <TouchableOpacity
-            style={[styles.navButton, styles.nextButton, { backgroundColor: tintColor }]}
+            style={[styles.navButton, styles.nextButton]}
             onPress={onNext}
             activeOpacity={0.7}
           >
-            <Ionicons name="chevron-forward" size={24} color="#fff" />
+            <ThemedText style={[labelStyle, { color: tintColor }]}>
+              {nextLabel}
+            </ThemedText>
+            <Ionicons name="chevron-forward" size={18} color={tintColor} />
           </TouchableOpacity>
         ) : (
-          <View style={styles.submitButtonContainer}>
-            <Button
-              title="Üye Ol"
-              onPress={onSubmit}
-              variant="primary"
-              size="large"
-              loading={loading}
-              style={styles.submitButton}
-            />
-          </View>
+          <TouchableOpacity
+            style={[styles.navButton, styles.nextButton]}
+            onPress={onSubmit}
+            activeOpacity={0.7}
+            disabled={loading}
+          >
+            <ThemedText style={[labelStyle, { color: tintColor }]}>
+              {nextLabel}
+            </ThemedText>
+          </TouchableOpacity>
         )}
       </View>
 
-      <View style={styles.loginButtonContainer}>
-        <Button
-          title="Giriş Yap"
-          onPress={onLogin}
-          variant="outline"
-          size="large"
-          style={styles.loginButton}
-        />
-      </View>
     </View>
   );
 }

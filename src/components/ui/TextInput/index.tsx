@@ -48,11 +48,6 @@ export function TextInput({
             textContentType={textContentType as any}
             maxLength={maxLength}
           />
-          {errors[name] && (
-            <ThemedText style={styles.errorText}>
-              {errors[name]?.message as string}
-            </ThemedText>
-          )}
         </>
       )}
     />

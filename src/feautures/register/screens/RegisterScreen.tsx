@@ -118,11 +118,13 @@ export default function RegisterScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <ThemedView card style={styles.card}>
+            <View style={styles.headerContainer}>
+              <StepHeader step={currentStep} />
+            </View>
+            <View style={styles.formContainer}>{renderStepContent()}</View>
             <View style={styles.progressBarContainer}>
               <ProgressBar currentStep={currentStep} totalSteps={TOTAL_STEPS} />
             </View>
-            <StepHeader step={currentStep} />
-            <View style={styles.formContainer}>{renderStepContent()}</View>
             <NavigationButtons
               currentStep={currentStep}
               totalSteps={TOTAL_STEPS}

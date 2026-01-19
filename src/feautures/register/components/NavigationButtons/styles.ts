@@ -10,36 +10,25 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
-    gap: 12,
+    paddingHorizontal: 4,
+    gap: 16,
   },
   navButton: {
-    height: 52,
-    borderRadius: 12,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 52,
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 6,
   },
   backButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
+    minWidth: 64,
   },
   backButtonDisabled: {
     opacity: 0.3,
   },
   nextButton: {
-    flex: 1,
-  },
-  submitButtonContainer: {
-    flex: 1,
-  },
-  submitButton: {
-    width: '100%',
-  },
-  loginButtonContainer: {
-    width: '100%',
-  },
-  loginButton: {
-    width: '100%',
+    minWidth: 120,
+    justifyContent: 'flex-end',
   },
 });
 
