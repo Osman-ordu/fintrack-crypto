@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,8 @@ import { PortfolioHoldings } from '@/feautures/portfolio/components/PortfolioHol
 import { PortfolioStats } from '@/feautures/portfolio/components/PortfolioStats';
 import { TodayPerformance } from '@/feautures/portfolio/components/TodayPerformance';
 import { TabParamList } from '@/navigation/types';
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getPortfolio } from '@/store/portfolio';
 import { RootState } from '@/store/store';
 import { styles } from './PortfolioScreen.styles';
 
@@ -23,8 +24,23 @@ type NavigationProp = BottomTabNavigationProp<TabParamList>;
 export default function PortfolioScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { user } = useAuth();
-  const quickTransactions = useAppSelector((state: RootState) => state.quickTransaction?.data?.data);
-  const hasPortfolio = quickTransactions && quickTransactions.length > 0;
+  const dispatch = useAppDispatch();
+  const portfolioStatistics = useAppSelector((state: RootState) => state.portfolio?.data?.data?.statistics);
+  const hasPortfolio = (portfolioStatistics?.distribution?.length ?? 0) > 0;
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getPortfolio());
+    }
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (user) {
+        dispatch(getPortfolio());
+      }
+    });
+
+    return unsubscribe;
+  }, [dispatch, navigation, user]);
 
   if (!user) {
     return (
@@ -83,10 +99,10 @@ export default function PortfolioScreen() {
 
   return (
     <ScreenLayout scrollContentStyle={styles.scrollContent}>
-      <PortfolioHeader />
-      <PortfolioDistribution />
-      <PortfolioStats />
-      <PortfolioHoldings />
+      <PortfolioHeader statistics={portfolioStatistics} />
+      <PortfolioDistribution distribution={portfolioStatistics?.distribution} />
+      <PortfolioStats statistics={portfolioStatistics} distribution={portfolioStatistics?.distribution} />
+      <PortfolioHoldings distribution={portfolioStatistics?.distribution} />
       <TodayPerformance />
       <PortfolioActions />
     </ScreenLayout>
