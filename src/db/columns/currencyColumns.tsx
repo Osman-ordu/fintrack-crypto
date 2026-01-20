@@ -1,9 +1,9 @@
 import React from 'react';
-import { Column } from '@/components/ui';
 import { AnimatedPrice } from '@/feautures/market/components/AnimatedPrice';
 import { styles } from '@/feautures/market/components/MarketList/styles';
+import { IColumn } from '@/types/index';
 
-export const currencyColumns: Column[] = [
+export const currencyColumns: IColumn[] = [
   {
     dataField: 'currencyName',
     caption: 'Döviz',
