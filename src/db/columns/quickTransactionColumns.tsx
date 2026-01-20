@@ -1,12 +1,12 @@
 import React from 'react';
-import { Column } from '@/components/ui';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { styles } from '@/feautures/market/components/MarketList/styles';
+import { IColumn } from '@/types/index';
 import { formatTransactionDate } from '@/utils';
 
-export const quickTransactionColumns: Column[] = [
+export const quickTransactionColumns: IColumn[] = [
     {
-      dataField: 'amount + quoteAsset', // birden fazla dataField kullanımı örn: 100 + USD
+      dataField: 'amount + baseAsset', // birden fazla dataField kullanımı örn: 100 + USD
       caption: 'Miktar',
       addition: {
         align: 'left',
@@ -14,20 +14,20 @@ export const quickTransactionColumns: Column[] = [
     },
 
     {
-      dataField: 'total + baseAsset',
+      dataField: 'total + quoteAsset',
       caption: 'Harcanan Tutar',
       addition: {
         align: 'left',
         separator: ' + ',
         renderCell: (value: any, row: any) => {
           const total = typeof row.total === 'number' ? row.total : parseFloat(row.total) || 0;
-          const baseAsset = row.baseAsset || '';
+          const quoteAsset = row.quoteAsset || '';
           return (
             <ThemedText style={styles.resultAmount}>
               {total.toLocaleString('tr-TR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })}{baseAsset ? ` ${baseAsset}` : ''}
+              })}{quoteAsset ? ` ${quoteAsset}` : ''}
             </ThemedText>
           );
         },
