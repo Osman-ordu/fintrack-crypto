@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ICurrencyData } from '@/types';
 
 const SOCKET_URL = 'wss://anlikaltinfiyatlari.com/sio/p7013/socket.io/?EIO=4&transport=websocket';
@@ -11,15 +11,19 @@ export function useCurrencySocket() {
   const reconnectAttempts = useRef(0);
   const maxReconnectAttempts = 5;
 
-  const parseSocketIOMessage = (message: string): any => {
+  const parseSocketIOMessage = useCallback((message: string): any => {
     try {
       if (!message || message.length === 0) return null;
 
       const packetType = parseInt(message[0]);
 
       if (packetType === 0) {
-        const config = message.length > 1 ? JSON.parse(message.substring(1)) : null;
-        return { type: 'open', data: config };
+        try {
+          const config = message.length > 1 ? JSON.parse(message.substring(1)) : null;
+          return { type: 'open', data: config };
+        } catch {
+          return null;
+        }
       }
 
       if (packetType === 3) {
@@ -54,14 +58,14 @@ export function useCurrencySocket() {
       return null;
     } catch (error) {
       void error;
-      void message;
       return null;
     }
-  };
+  }, []);
 
-  const handleMessage = (event: MessageEvent) => {
+  const handleMessage = useCallback((event: MessageEvent) => {
     try {
       const message = typeof event.data === 'string' ? event.data : '';
+      if (!message) return;
       const parsed = parseSocketIOMessage(message);
 
       if (!parsed) {
@@ -201,9 +205,9 @@ export function useCurrencySocket() {
       void error;
       void event;
     }
-  };
+  }, [parseSocketIOMessage]);
 
-  const connect = () => {
+  const connect = useCallback(() => {
     try {
       const ws = new WebSocket(SOCKET_URL);
       wsRef.current = ws;
@@ -245,7 +249,7 @@ export function useCurrencySocket() {
       void error;
       setIsConnected(false);
     }
-  };
+  }, [handleMessage]);
 
   useEffect(() => {
     connect();
@@ -259,7 +263,7 @@ export function useCurrencySocket() {
         wsRef.current = null;
       }
     };
-  }, []);
+  }, [connect]);
 
   return {
     currencies,
