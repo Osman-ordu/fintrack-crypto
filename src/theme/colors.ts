@@ -73,7 +73,9 @@ export const CurrencyColors = {
   USD: '#10B981',
   EUR: '#3B82F6',
   // Precious Metals
-  GOLD: '#FFD700',
+  GOLD22: '#FF7A00',
+  GOLD14: '#FFCC33',
+  GOLD: '#FFE700',
   SILVER: '#C0C0C0',
   // Default
   default: '#666',

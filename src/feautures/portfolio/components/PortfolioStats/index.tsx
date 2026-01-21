@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { TextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
+import { getAssetColor } from '@/feautures/portfolio/utils/getAssetColor';
 import { IPortfolioDistributionItem, IPortfolioStatistics } from '@/store/portfolio/types';
 import { CurrencyColors, SemanticColors } from '@/theme';
 import { styles } from './styles';
@@ -11,24 +12,6 @@ import { styles } from './styles';
 type PortfolioStatsProps = {
   statistics?: IPortfolioStatistics | null;
   distribution?: IPortfolioDistributionItem[];
-};
-
-const getAssetColor = (asset: string) => {
-  const normalized = asset.toUpperCase();
-
-  if (normalized in CurrencyColors) {
-    return CurrencyColors[normalized as keyof typeof CurrencyColors];
-  }
-
-  if (normalized.includes('XAU') || normalized.includes('GOLD') || normalized.includes('AYAR')) {
-    return CurrencyColors.GOLD;
-  }
-
-  if (normalized.includes('XAG') || normalized.includes('SILVER')) {
-    return CurrencyColors.SILVER;
-  }
-
-  return CurrencyColors.default;
 };
 
 export function PortfolioStats({ statistics, distribution = [] }: PortfolioStatsProps) {

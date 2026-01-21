@@ -4,8 +4,8 @@ import Svg, { G, Path } from 'react-native-svg';
 import { TextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
+import { getAssetColor } from '@/feautures/portfolio/utils/getAssetColor';
 import { IPortfolioDistributionItem } from '@/store/portfolio/types';
-import { CurrencyColors } from '@/theme';
 import { styles } from './styles';
 
 const CHART_SIZE = 120;
@@ -14,24 +14,6 @@ const CHART_STROKE_WIDTH = 20;
 const CENTER = CHART_SIZE / 2;
 const INNER_RADIUS = CHART_RADIUS - CHART_STROKE_WIDTH / 2;
 const OUTER_RADIUS = CHART_RADIUS + CHART_STROKE_WIDTH / 2;
-
-const getAssetColor = (asset: string) => {
-  const normalized = asset.toUpperCase();
-
-  if (normalized in CurrencyColors) {
-    return CurrencyColors[normalized as keyof typeof CurrencyColors];
-  }
-
-  if (normalized.includes('XAU') || normalized.includes('GOLD') || normalized.includes('AYAR')) {
-    return CurrencyColors.GOLD;
-  }
-
-  if (normalized.includes('XAG') || normalized.includes('SILVER')) {
-    return CurrencyColors.SILVER;
-  }
-
-  return CurrencyColors.default;
-};
 
 // Calculate arc path for donut chart segment
 const createArcPath = (
