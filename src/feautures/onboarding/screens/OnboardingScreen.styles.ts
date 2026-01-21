@@ -1,4 +1,4 @@
-import { Dimensions,StyleSheet  } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { Colors } from "@/theme";
 const { width, height } = Dimensions.get('window');
 
@@ -14,16 +14,18 @@ export const styles = StyleSheet.create({
     },
     backgroundContainer: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: '#1a1a1a', // Gri/siyah arka plan
+      backgroundColor: '#1a1a1a',
       overflow: 'visible',
     },
     contentContainer: {
       position: 'absolute',
-      top: height * 0.15,
+      top: 0,
+      bottom: 0,
       left: 0,
       right: 0,
       alignItems: 'center',
-      paddingHorizontal: 24,
+      justifyContent: 'center',
+      paddingHorizontal: 16,
       overflow: 'visible',
     },
     title: {
@@ -37,56 +39,29 @@ export const styles = StyleSheet.create({
       color: 'rgba(226,232,240,0.9)',
       fontSize: 16,
     },
-    logoContainer: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: 24,
-      paddingTop: 40,
-      paddingBottom: 40,
-      overflow: 'visible',
-      zIndex: 10,
-      pointerEvents: 'none',
-    },
-    logoTextContainer: {
-      flexDirection: 'row',
-      alignItems: 'baseline',
-    },
-    logoTextFin: {
-      fontSize: 24,
-      fontWeight: '400',
-      letterSpacing: 0,
-      color: Colors.light.tint,
-      includeFontPadding: false,
-    },
-    logoTextTrack: {
-      fontSize: 24,
-      fontWeight: '700',
-      letterSpacing: 0,
-      color: Colors.light.tint,
-      includeFontPadding: false,
-      marginLeft: 2,
-    },
-    middleContainer: {
-      position: 'absolute',
-      top: height * 0.65,
-      left: 0,
-      right: 0,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    dotsContainer: {
+    progressContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 6,
+      justifyContent: 'center',
+      gap: 10,
     },
-    dot: {
-      height: 8,
+    progressOverlay: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: height * 0.68,
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 5,
+    },
+    progressItem: {
+      width: 48,
+      height: 6,
       borderRadius: 4,
+      backgroundColor: 'rgba(255,255,255,0.25)',
+    },
+    progressItemActive: {
+      backgroundColor: Colors.light.tint,
     },
     bottomContainer: {
       position: 'absolute',
@@ -97,7 +72,12 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       zIndex: 20,
     },
-    startButton: {
-      minWidth: 120,
+    startAction: {
+      paddingVertical: 4,
+    },
+    startActionText: {
+      color: Colors.light.tint,
+      fontSize: 16,
+      fontWeight: '600',
     },
   });

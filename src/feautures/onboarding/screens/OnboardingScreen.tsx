@@ -3,32 +3,38 @@ import {
   Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Pressable,
   ScrollView,
   View,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Button } from '@/components/ui/Button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
 import { slides } from '@/db';
 import type { RootStackParamList } from '@/navigation/types';
-import { Colors } from '@/theme';
 import { styles } from './OnboardingScreen.styles';
 const { width } = Dimensions.get('window');
 type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'>;
+const ONBOARDING_SEEN_KEY = 'onboarding_seen';
 
 export default function OnboardingScreen({ navigation }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [hasSeenContinue, setHasSeenContinue] = useState(false);
   const scrollRef = useRef<ScrollView | null>(null);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / width);
     setActiveIndex(index);
+    if (index === slides.length - 1) {
+      setHasSeenContinue(true);
+    }
   };
 
-  const handleGetStarted = () => {
+  const handleGetStarted = async () => {
     try {
+      await AsyncStorage.setItem(ONBOARDING_SEEN_KEY, 'true');
       navigation.replace('Tabs');
     } catch (error) {
       console.error('Navigation error:', error);
@@ -55,50 +61,39 @@ export default function OnboardingScreen({ navigation }: Props) {
                 <ThemedText style={styles.subtitle}>{slide.subtitle}</ThemedText>
               </View>
 
-              <View style={styles.middleContainer}>
-                <View style={styles.dotsContainer}>
-                  {slides?.map((_, dotIndex) => {
-                    const isActive = dotIndex === activeIndex;
-                    return (
-                      <View
-                        key={dotIndex}
-                        style={[
-                          styles.dot,
-                          {
-                            backgroundColor: isActive
-                              ? Colors.light.tint
-                              : 'rgba(255,255,255,0.4)',
-                            width: isActive ? 20 : 8,
-                          },
-                        ]}
-                      />
-                    );
-                  })}
-                </View>
-              </View>
-
-              {index === slides.length - 1 && (
-                <View style={styles.bottomContainer}>
-                  <Button
-                    title="Başla"
-                    onPress={handleGetStarted}
-                    variant="primary"
-                    size="small"
-                    style={styles.startButton}
-                  />
-                </View>
-              )}
-            </View>
-
-            <View style={styles.logoContainer}>
-              <View style={styles.logoTextContainer}>
-                <ThemedText style={styles.logoTextFin}>cepte</ThemedText>
-                <ThemedText style={styles.logoTextTrack}>CASH</ThemedText>
-              </View>
             </View>
           </View>
         ))}
       </ScrollView>
+      <View style={styles.progressOverlay}>
+        <View style={styles.progressContainer}>
+          {[0, 1, 2].map((stepIndex) => {
+            const isActive = stepIndex === activeIndex;
+            return (
+              <Pressable
+                key={stepIndex}
+                onPress={() =>
+                  scrollRef.current?.scrollTo({
+                    x: width * stepIndex,
+                    animated: true,
+                  })
+                }
+                style={[
+                  styles.progressItem,
+                  isActive && styles.progressItemActive,
+                ]}
+              />
+            );
+          })}
+        </View>
+      </View>
+      {(hasSeenContinue || activeIndex === slides.length - 1) && (
+        <View style={styles.bottomContainer}>
+          <Pressable onPress={handleGetStarted} style={styles.startAction}>
+            <ThemedText style={styles.startActionText}>Devam Et</ThemedText>
+          </Pressable>
+        </View>
+      )}
     </ThemedView>
   );
 }

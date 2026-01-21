@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '@/contexts/AuthContext';
 import { EasyBuySellScreen } from '@/feautures/easyBuySell';
 import { LoginScreen } from '@/feautures/login';
@@ -13,6 +14,7 @@ import { RegisterScreen } from '@/feautures/register';
 import { TransactionsScreen } from '@/feautures/transactions';
 import { VerifyEmailScreen } from '@/feautures/verifyEmail';
 import { MarketStackParamList,RootStackParamList, TabParamList } from './types';
+const ONBOARDING_SEEN_KEY = 'onboarding_seen';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -81,13 +83,31 @@ function TabNavigator() {
 
 export default function RootNavigator() {
   const { user, loading } = useAuth();
-    if (loading) {
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(
+    null
+  );
+
+  useEffect(() => {
+    const loadOnboardingState = async () => {
+      try {
+        const value = await AsyncStorage.getItem(ONBOARDING_SEEN_KEY);
+        setHasSeenOnboarding(value === 'true');
+      } catch (error) {
+        console.error('Onboarding flag error:', error);
+        setHasSeenOnboarding(false);
+      }
+    };
+
+    loadOnboardingState();
+  }, []);
+
+  if (loading || hasSeenOnboarding === null) {
     return null;
   }
 
   return (
     <RootStack.Navigator
-      initialRouteName={user ? 'Tabs' : 'Onboarding'}
+      initialRouteName={user ? 'Tabs' : hasSeenOnboarding ? 'Tabs' : 'Onboarding'}
       screenOptions={{ headerShown: false }}
     >
       <RootStack.Screen name="Onboarding" component={OnboardingScreen} />
