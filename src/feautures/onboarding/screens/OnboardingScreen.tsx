@@ -45,7 +45,7 @@ export default function OnboardingScreen({ navigation }: Props) {
         scrollEventThrottle={16}
         ref={scrollRef}
       >
-        {slides.map((slide, index) => (
+        {slides?.map((slide, index) => (
           <View key={slide.key} style={styles.slide}>
             <View style={styles.backgroundContainer}>
               <View style={styles.contentContainer}>
@@ -57,7 +57,7 @@ export default function OnboardingScreen({ navigation }: Props) {
 
               <View style={styles.middleContainer}>
                 <View style={styles.dotsContainer}>
-                  {slides.map((_, dotIndex) => {
+                  {slides?.map((_, dotIndex) => {
                     const isActive = dotIndex === activeIndex;
                     return (
                       <View

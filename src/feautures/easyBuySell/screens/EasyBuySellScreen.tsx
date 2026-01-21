@@ -276,7 +276,7 @@ export default function EasyBuySellScreen({ navigation }: Props) {
                 </Pressable>
               </View>
               <ScrollView>
-                {currencyList.map((currency) => (
+                {currencyList?.map((currency) => (
                   <Pressable
                     key={currency.symbol}
                     style={[
@@ -317,7 +317,7 @@ export default function EasyBuySellScreen({ navigation }: Props) {
                 </Pressable>
               </View>
               <ScrollView>
-                {currencyList.map((currency) => (
+                {currencyList?.map((currency) => (
                   <Pressable
                     key={currency.symbol}
                     style={[

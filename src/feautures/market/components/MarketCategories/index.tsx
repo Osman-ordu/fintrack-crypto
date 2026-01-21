@@ -23,7 +23,7 @@ export function MarketCategories() {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {categories.map((category) => {
+        {categories?.map((category) => {
           const isSelected = selectedCategory === category.id;
           return (
             <Pressable

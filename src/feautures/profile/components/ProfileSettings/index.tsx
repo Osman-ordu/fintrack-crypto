@@ -146,7 +146,7 @@ export function ProfileSettings() {
       <ThemedView card style={styles.card}>
         <ThemedText style={styles.sectionTitle}>Ayarlar</ThemedText>
 
-        {settings.map((setting, index) => (
+        {settings?.map((setting, index) => (
           <View key={setting.id}>
             <Pressable
               style={styles.settingItem}

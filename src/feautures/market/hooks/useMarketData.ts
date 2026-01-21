@@ -12,7 +12,7 @@ export function useMarketData({ socketCurrencies, isConnected }: UseMarketDataPr
   const currencyData = useMemo(() => {
     if (!isConnected) return [];
 
-    return CURRENCIES.map((currency) => {
+    return CURRENCIES?.map((currency) => {
       const socketCurrency = socketCurrencies[currency];
       const buyPrice = socketCurrency?.buyPrice;
       const sellPrice = socketCurrency?.sellPrice;
@@ -37,7 +37,7 @@ export function useMarketData({ socketCurrencies, isConnected }: UseMarketDataPr
   }, [socketCurrencies, isConnected]);
 
   const quickTransactionData = useMemo(() => {
-    return DUMMY_QUICK_TRANSACTIONS.map((transaction) => ({
+    return DUMMY_QUICK_TRANSACTIONS?.map((transaction) => ({
       ...transaction,
       currencyName: CURRENCIES_NAMES[transaction.currency as keyof typeof CURRENCIES_NAMES] || transaction.currency,
       amountDisplay: `${transaction.amount} ${transaction.currency}`,

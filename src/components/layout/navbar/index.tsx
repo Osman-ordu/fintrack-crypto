@@ -77,7 +77,7 @@ export function Navbar() {
         ]}
       />
       <View style={styles.navContainer}>
-        {navItems.map((item) => {
+        {navItems?.map((item) => {
           let isActive = false;
           if (item.name === 'index') {
             isActive = pathname === '/(tabs)/' || pathname === '/(tabs)';

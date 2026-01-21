@@ -44,7 +44,7 @@ export function RealTimeCurrencyRates() {
 
   const displayCurrencies = React.useMemo(() => {
 
-    const result = DISPLAY_CURRENCIES.map((symbol) => {
+    const result = DISPLAY_CURRENCIES?.map((symbol) => {
       const currency = currencies[symbol];
       if (currency && currency.buyPrice > 0 && currency.sellPrice > 0) {
         return currency;
@@ -103,7 +103,7 @@ export function RealTimeCurrencyRates() {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {displayCurrencies.map((currency) => {
+        {displayCurrencies?.map((currency) => {
           const isPositive = currency.changePercent > 0;
           const changeColor = isPositive ? SemanticColors.success : SemanticColors.error;
           const changeIcon = isPositive ? 'arrow-up' : 'arrow-down';
@@ -152,7 +152,7 @@ export function RealTimeCurrencyRates() {
             </ThemedView>
           );
         })}
-        {displayCurrencies.map((currency) => {
+        {displayCurrencies?.map((currency) => {
           const isPositive = currency.changePercent > 0;
           const changeColor = isPositive ? SemanticColors.success : SemanticColors.error;
           const changeIcon = isPositive ? 'arrow-up' : 'arrow-down';

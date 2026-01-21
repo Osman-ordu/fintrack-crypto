@@ -65,7 +65,7 @@ type IPortfolioDistributionProps = {
 
 export function PortfolioDistribution({ distribution = [] }: IPortfolioDistributionProps) {
   let currentAngle = -90;
-  const chartSegments = distribution.map((item) => {
+  const chartSegments = distribution?.map((item) => {
     const startAngle = currentAngle;
     const angle = (item.percentage / 100) * 360;
     const endAngle = startAngle + angle;
@@ -88,7 +88,7 @@ export function PortfolioDistribution({ distribution = [] }: IPortfolioDistribut
           <View style={styles.chartWrapper}>
             <Svg width={CHART_SIZE} height={CHART_SIZE} style={styles.chart}>
               <G>
-                {chartSegments.map((segment, index) => (
+                {chartSegments?.map((segment, index) => (
                   <Path
                     key={index}
                     d={segment.path}
@@ -100,7 +100,7 @@ export function PortfolioDistribution({ distribution = [] }: IPortfolioDistribut
           </View>
 
           <View style={styles.legend}>
-            {distribution.map((item, index) => (
+            {distribution?.map((item, index) => (
               <View key={index} style={styles.legendItem}>
                 <View style={[styles.legendColor, { backgroundColor: getAssetColor(item.baseAsset) }]} />
                 <View style={styles.legendText}>

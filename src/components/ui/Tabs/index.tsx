@@ -22,7 +22,7 @@ export function Tabs({ tabs, defaultTab, onTabChange }: ITabsProps) {
   return (
     <View style={styles.container}>
       <View style={[styles.tabsContainer, { backgroundColor: backgroundColor + '20' }]}>
-        {tabs.map((tab, index) => {
+        {tabs?.map((tab, index) => {
           const isActive = activeTab === tab.value;
           const isFirst = index === 0;
           const isLast = index === tabs.length - 1;

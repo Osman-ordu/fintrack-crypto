@@ -41,7 +41,7 @@ export function PortfolioStats({ statistics, distribution = [] }: PortfolioStats
         <TextTitle>Portföy İstatistikleri</TextTitle>
 
         <View style={styles.statsGrid}>
-          {distribution.map((item, index) => (
+          {distribution?.map((item, index) => (
             <ThemedView key={index} card style={styles.statCard}>
               <View style={styles.statHeader}>
                 <View style={[styles.colorDot, { backgroundColor: getAssetColor(item.baseAsset) }]} />

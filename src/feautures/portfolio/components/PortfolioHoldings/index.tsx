@@ -24,7 +24,7 @@ export function PortfolioHoldings({ distribution = [] }: PortfolioHoldingsProps)
         </View>
 
         <View style={styles.list}>
-          {distribution.map((holding, index) => {
+          {distribution?.map((holding, index) => {
             const changeValue = 0;
             const isPositive = changeValue > 0;
             const changeColor = isPositive ? SemanticColors.success : SemanticColors.error;

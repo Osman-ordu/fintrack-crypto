@@ -27,7 +27,7 @@ export function MarketTable({ currencies, isConnected }: IMarketTableProps) {
   const currencyData = React.useMemo(() => {
     if (!isConnected) return [];
 
-    return CURRENCIES.map((currency) => {
+    return CURRENCIES?.map((currency) => {
       const data = currencies[currency];
       if (!data || !data.buyPrice || !data.sellPrice) return null;
 

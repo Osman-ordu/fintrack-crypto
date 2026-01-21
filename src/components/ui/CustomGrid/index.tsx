@@ -32,7 +32,7 @@ export function CustomGrid({
   const renderHeader = () => {
     return (
       <View style={[styles.tableHeader, headerStyle]}>
-        {columns.map((column, index) => {
+        {columns?.map((column, index) => {
           const columnWidth = column.addition?.width || 'auto';
           const align = column.addition?.align || 'center';
           const columnKey = getColumnKey(column);
