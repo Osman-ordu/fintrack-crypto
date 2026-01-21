@@ -3,7 +3,6 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { ScreenLayout } from '@/components/layout';
 import { useAuth } from '@/contexts/AuthContext';
-import { PortfolioActions } from '@/feautures/portfolio/components/PortfolioActions';
 import { PortfolioAuthPrompt } from '@/feautures/portfolio/components/PortfolioAuthPrompt';
 import { PortfolioDistribution } from '@/feautures/portfolio/components/PortfolioDistribution';
 import { PortfolioEmptyState } from '@/feautures/portfolio/components/PortfolioEmptyState';
@@ -70,7 +69,6 @@ export default function PortfolioScreen() {
       <PortfolioStats statistics={portfolioStatistics} distribution={portfolioStatistics?.distribution} />
       <PortfolioHoldings distribution={portfolioStatistics?.distribution} />
       <TodayPerformance />
-      <PortfolioActions />
     </ScreenLayout>
   );
 }
