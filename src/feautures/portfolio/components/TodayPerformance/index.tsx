@@ -6,6 +6,7 @@ import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
 import { todayPerformance } from '@/db';
 import { SemanticColors } from '@/theme';
+import { LatestTransaction } from '../LatestTransaction';
 import { styles } from './styles';
 
 export function TodayPerformance() {
@@ -64,31 +65,7 @@ export function TodayPerformance() {
         </View>
 
         {/* Son yapılan işlem */}
-        <View style={styles.transactionContainer}>
-          <ThemedText style={styles.transactionTitle}>Son Yapılan İşlem</ThemedText>
-          <View style={styles.transactionRow}>
-            <View style={styles.transactionInfo}>
-              <ThemedText style={styles.transactionType}>
-                {todayPerformance.lastTransaction.type}
-              </ThemedText>
-              <ThemedText style={styles.transactionDetails}>
-                {todayPerformance.lastTransaction.amount} {todayPerformance.lastTransaction.coin}
-              </ThemedText>
-            </View>
-            <View style={styles.transactionRight}>
-              <ThemedText style={styles.transactionPrice}>
-                {todayPerformance.lastTransaction.price.toLocaleString('tr-TR', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}{' '}
-                ₺
-              </ThemedText>
-              <ThemedText style={styles.transactionTime}>
-                {todayPerformance.lastTransaction.time}
-              </ThemedText>
-            </View>
-          </View>
-        </View>
+          <LatestTransaction />
       </ThemedView>
     </ThemedView>
   );

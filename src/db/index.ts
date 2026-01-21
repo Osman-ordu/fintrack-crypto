@@ -93,13 +93,6 @@ export const portfolioAnalysis = {
       value: -850.25,
       icon: ETHIcon,
     },
-    lastTransaction: {
-      type: 'Satış',
-      coin: 'SOL',
-      amount: 2.5,
-      price: 1250.75,
-      time: '14:30',
-    },
   };
 
   export const baseTrendingCoins: TrendingCoin[] = [

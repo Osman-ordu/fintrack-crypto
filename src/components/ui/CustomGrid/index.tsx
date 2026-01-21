@@ -25,8 +25,9 @@ export function CustomGrid({
   );
 
   const filteredData = useMemo(() => {
-    if (!tab || !tabConfig || !activeTab) return data;
-    return data.filter((row) => row[tabConfig.type] === activeTab);
+    const safeData = Array.isArray(data) ? data : [];
+    if (!tab || !tabConfig || !activeTab || !tabConfig.type) return safeData;
+    return safeData.filter((row) => row && row[tabConfig.type] === activeTab);
   }, [data, tab, tabConfig, activeTab]);
 
   const renderHeader = () => {
