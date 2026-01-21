@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { ScreenLayout } from '@/components/layout';
-import { Button } from '@/components/ui/Button';
-import { ThemedText } from '@/components/ui/ThemedText';
-import { ThemedView } from '@/components/ui/ThemedView';
 import { useAuth } from '@/contexts/AuthContext';
 import { PortfolioActions } from '@/feautures/portfolio/components/PortfolioActions';
+import { PortfolioAuthPrompt } from '@/feautures/portfolio/components/PortfolioAuthPrompt';
 import { PortfolioDistribution } from '@/feautures/portfolio/components/PortfolioDistribution';
+import { PortfolioEmptyState } from '@/feautures/portfolio/components/PortfolioEmptyState';
 import { PortfolioHeader } from '@/feautures/portfolio/components/PortfolioHeader';
 import { PortfolioHoldings } from '@/feautures/portfolio/components/PortfolioHoldings';
 import { PortfolioStats } from '@/feautures/portfolio/components/PortfolioStats';
@@ -45,30 +43,10 @@ export default function PortfolioScreen() {
   if (!user) {
     return (
       <ScreenLayout scrollContentStyle={styles.scrollContent}>
-        <ThemedView card style={styles.authCard}>
-          <View style={styles.authPrompt}>
-            <ThemedText style={styles.authTitle}>Portföyünüzü Yönetin</ThemedText>
-            <ThemedText style={styles.authMessage}>
-              Portföyünüzü görüntülemek ve yönetmek için giriş yapın veya üye olun
-            </ThemedText>
-            <View style={styles.authButtons}>
-              <Button
-                title="Giriş Yap"
-                onPress={() => navigation.navigate('Login' as any )}
-                variant="primary"
-                size="medium"
-                style={styles.authButton}
-              />
-              <Button
-                title="Üye Ol"
-                onPress={() => navigation.navigate('Register' as any )}
-                variant="outline"
-                size="medium"
-                style={styles.authButton}
-              />
-            </View>
-          </View>
-        </ThemedView>
+        <PortfolioAuthPrompt
+          onLogin={() => navigation.navigate('Login' as any)}
+          onRegister={() => navigation.navigate('Register' as any)}
+        />
       </ScreenLayout>
     );
   }
@@ -76,23 +54,11 @@ export default function PortfolioScreen() {
   if (!hasPortfolio) {
     return (
       <ScreenLayout scrollContentStyle={styles.scrollContent}>
-        <ThemedView card style={styles.authCard}>
-          <View style={styles.authPrompt}>
-            <ThemedText style={styles.authTitle}>Portföy Oluşturun</ThemedText>
-            <ThemedText style={styles.authMessage}>
-              İlk işleminizi yaparak portföyünüzü oluşturun
-            </ThemedText>
-            <Button
-              title="Şimdi Portföy Oluştur"
-              onPress={() => {
-                navigation.navigate('Transactions');
-              }}
-              variant="primary"
-              size="medium"
-              style={styles.createButton}
-            />
-          </View>
-        </ThemedView>
+        <PortfolioEmptyState
+          onCreate={() => {
+            navigation.navigate('Transactions');
+          }}
+        />
       </ScreenLayout>
     );
   }
