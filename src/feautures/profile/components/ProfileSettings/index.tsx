@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Alert,Pressable, Switch, View } from 'react-native';
+import { Alert, Pressable, Switch, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
 import { useTheme } from '@/contexts/ThemeContext';
-import { IconColors,SemanticColors } from '@/theme';
+import { RootStackParamList } from '@/navigation/types';
+import { IconColors, SemanticColors } from '@/theme';
 import { styles } from './styles';
 
 type SettingItem = {
@@ -16,13 +19,16 @@ type SettingItem = {
   onPress?: () => void;
 };
 
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
 export function ProfileSettings() {
+  const navigation = useNavigation<NavigationProp>();
   const { themeMode, colorScheme, setThemeMode } = useTheme();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [biometricEnabled, setBiometricEnabled] = useState(false);
 
   const handleResetPassword = () => {
-    Alert.alert('Şifre Sıfırlama', 'Şifre sıfırlama e-postası gönderilecek.');
+    navigation.navigate('PasswordReset');
   };
 
   const handleLanguage = () => {

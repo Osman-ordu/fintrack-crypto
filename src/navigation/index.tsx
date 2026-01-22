@@ -8,6 +8,7 @@ import { EasyBuySellScreen } from '@/feautures/easyBuySell';
 import { LoginScreen } from '@/feautures/login';
 import { MarketScreen } from '@/feautures/market';
 import { OnboardingScreen } from '@/feautures/onboarding';
+import { PasswordResetScreen } from '@/feautures/passwordReset';
 import { PortfolioScreen } from '@/feautures/portfolio';
 import { ProfileScreen } from '@/feautures/profile';
 import { RegisterScreen } from '@/feautures/register';
@@ -113,6 +114,7 @@ export default function RootNavigator() {
       <RootStack.Screen name="Onboarding" component={OnboardingScreen} />
       <RootStack.Screen name="Login" component={LoginScreen} />
       <RootStack.Screen name="Register" component={RegisterScreen} />
+      <RootStack.Screen name="PasswordReset" component={PasswordResetScreen} />
       <RootStack.Screen name="Tabs" component={TabNavigator} />
       <RootStack.Screen
         name="EasyBuySell"

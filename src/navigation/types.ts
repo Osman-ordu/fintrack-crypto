@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Onboarding: undefined;
   Login: undefined;
   Register: undefined;
+  PasswordReset: undefined;
   Tabs: undefined;
   EasyBuySell: undefined;
   VerifyEmail: undefined;
