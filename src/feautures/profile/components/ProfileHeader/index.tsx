@@ -3,10 +3,12 @@ import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
+import { IUser } from '@/store/user/types';
 import { IconColors } from '@/theme';
 import { styles } from './styles';
 
-export function ProfileHeader() {
+export function ProfileHeader({ user } : { user: IUser }) {
+
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
@@ -19,8 +21,8 @@ export function ProfileHeader() {
           </View>
         </View>
 
-        <ThemedText style={styles.name}>Kullanıcı Adı</ThemedText>
-        <ThemedText style={styles.email}>kullanici@example.com</ThemedText>
+        <ThemedText style={styles.name}>{user?.name}</ThemedText>
+        <ThemedText style={styles.email}>{user?.email}</ThemedText>
 
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
