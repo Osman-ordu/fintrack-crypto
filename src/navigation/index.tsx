@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@/contexts/AuthContext';
+import { AboutScreen } from '@/feautures/about';
 import { EasyBuySellScreen } from '@/feautures/easyBuySell';
 import { LoginScreen } from '@/feautures/login';
 import { MarketScreen } from '@/feautures/market';
@@ -115,6 +116,7 @@ export default function RootNavigator() {
       <RootStack.Screen name="Login" component={LoginScreen} />
       <RootStack.Screen name="Register" component={RegisterScreen} />
       <RootStack.Screen name="PasswordReset" component={PasswordResetScreen} />
+      <RootStack.Screen name="About" component={AboutScreen} />
       <RootStack.Screen name="Tabs" component={TabNavigator} />
       <RootStack.Screen
         name="EasyBuySell"

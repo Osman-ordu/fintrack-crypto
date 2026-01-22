@@ -25,7 +25,6 @@ export function ProfileSettings() {
   const navigation = useNavigation<NavigationProp>();
   const { themeMode, colorScheme, setThemeMode } = useTheme();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [biometricEnabled, setBiometricEnabled] = useState(false);
 
   const handleResetPassword = () => {
     navigation.navigate('PasswordReset');
@@ -39,20 +38,12 @@ export function ProfileSettings() {
     Alert.alert('Para Birimi', 'Para birimi seçimi yakında eklenecek.');
   };
 
-  const handleSecurity = () => {
-    Alert.alert('Güvenlik', 'Güvenlik ayarları yakında eklenecek.');
-  };
-
   const handlePrivacy = () => {
     Alert.alert('Gizlilik', 'Gizlilik ayarları yakında eklenecek.');
   };
 
   const handleAbout = () => {
-    Alert.alert('Hakkında', 'CepteCash v1.0.0');
-  };
-
-  const handleHelp = () => {
-    Alert.alert('Yardım', 'Yardım ve destek yakında eklenecek.');
+    navigation.navigate('About');
   };
 
   const isDarkMode = colorScheme === 'dark';
@@ -88,14 +79,7 @@ export function ProfileSettings() {
       value: notificationsEnabled,
       onPress: () => setNotificationsEnabled(!notificationsEnabled),
     },
-    {
-      id: 'biometric',
-      title: 'Biyometrik Giriş',
-      icon: 'finger-print-outline',
-      type: 'toggle',
-      value: biometricEnabled,
-      onPress: () => setBiometricEnabled(!biometricEnabled),
-    },
+
     {
       id: 'password',
       title: 'Şifre Sıfırla',
@@ -117,13 +101,7 @@ export function ProfileSettings() {
       type: 'navigation',
       onPress: handleCurrency,
     },
-    {
-      id: 'security',
-      title: 'Güvenlik',
-      icon: 'shield-checkmark-outline',
-      type: 'navigation',
-      onPress: handleSecurity,
-    },
+
     {
       id: 'privacy',
       title: 'Gizlilik',
@@ -131,13 +109,7 @@ export function ProfileSettings() {
       type: 'navigation',
       onPress: handlePrivacy,
     },
-    {
-      id: 'help',
-      title: 'Yardım ve Destek',
-      icon: 'help-circle-outline',
-      type: 'navigation',
-      onPress: handleHelp,
-    },
+
     {
       id: 'about',
       title: 'Hakkında',
