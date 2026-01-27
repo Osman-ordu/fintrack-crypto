@@ -92,13 +92,6 @@ export function ProfileSettings() {
       onPress: handleResetPassword,
     },
     {
-      id: 'language',
-      title: 'Dil',
-      icon: 'language-outline',
-      type: 'navigation',
-      onPress: handleLanguage,
-    },
-    {
       id: 'currency',
       title: 'Para Birimi',
       icon: 'cash-outline',
