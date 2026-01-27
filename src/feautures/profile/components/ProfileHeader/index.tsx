@@ -23,23 +23,8 @@ export function ProfileHeader({ user } : { user: IUser }) {
 
         <ThemedText style={styles.name}>{user?.name}</ThemedText>
         <ThemedText style={styles.email}>{user?.email}</ThemedText>
+        <ThemedText style={styles.phone}>{'+' + user?.phone}</ThemedText>
 
-        <View style={styles.statsRow}>
-          <View style={styles.statItem}>
-            <ThemedText style={styles.statValue}>125.450₺</ThemedText>
-            <ThemedText style={styles.statLabel}>Toplam Değer</ThemedText>
-          </View>
-          <View style={styles.statDivider} />
-          <View style={styles.statItem}>
-            <ThemedText style={styles.statValue}>4</ThemedText>
-            <ThemedText style={styles.statLabel}>Coin</ThemedText>
-          </View>
-          <View style={styles.statDivider} />
-          <View style={styles.statItem}>
-            <ThemedText style={styles.statValue}>+15.2%</ThemedText>
-            <ThemedText style={styles.statLabel}>Kâr/Zarar</ThemedText>
-          </View>
-        </View>
       </ThemedView>
     </ThemedView>
   );
